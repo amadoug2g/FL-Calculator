@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:math_expressions/math_expressions.dart';
 
 class MyHomeApp extends StatefulWidget {
   const MyHomeApp({Key? key}) : super(key: key);
@@ -19,7 +20,8 @@ class _MyCalculator extends State<MyHomeApp> {
   //endregion
 
   //region Functions
-  TextButton displayTextButton(String text, double fontSize, [Color color = Colors.white, bool activated = true]) {
+  TextButton displayTextButton(String text, double fontSize,
+      {Color color = Colors.white, bool activated = true}) {
     TextButton child;
 
     if (activated) {
@@ -63,7 +65,20 @@ class _MyCalculator extends State<MyHomeApp> {
           input = "0";
         }
       } else if (text == "=") {
+        expression = input;
+        expression = input.replaceAll("×", "*");
+        expression = input.replaceAll("÷", "/");
 
+        try {
+          Parser p = Parser();
+          Expression exp = p.parse(expression);
+
+          ContextModel cm = ContextModel();
+          result = '${exp.evaluate(EvaluationType.REAL, cm)}';
+        } catch (e) {
+          result = "Error";
+        }
+        input = "0";
       } else {
         if (input == "0") {
           input = text;
@@ -129,7 +144,7 @@ class _MyCalculator extends State<MyHomeApp> {
                                   Column(
                                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                     children: <Widget> [
-                                      displayTextButton("INV", 20.0),
+                                      displayTextButton("INV", 20.0, activated: false),
                                       displayTextButton("%", 20.0),
                                       displayTextButton("π", 20.0),
                                     ],
@@ -140,9 +155,9 @@ class _MyCalculator extends State<MyHomeApp> {
                                   Column(
                                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                     children: <Widget> [
-                                      displayTextButton("RAD", 20.0),
-                                      displayTextButton("ln", 20.0),
-                                      displayTextButton("e", 20.0),
+                                      displayTextButton("RAD", 20.0, activated: false),
+                                      displayTextButton("ln", 20.0, activated: false),
+                                      displayTextButton("e", 20.0, activated: false),
                                     ],
                                   ),
                               ),
@@ -151,9 +166,9 @@ class _MyCalculator extends State<MyHomeApp> {
                                   Column(
                                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                     children: <Widget> [
-                                      displayTextButton("sin", 20.0),
-                                      displayTextButton("log", 20.0),
-                                      displayTextButton("(", 20.0),
+                                      displayTextButton("sin", 20.0, activated: false),
+                                      displayTextButton("log", 20.0, activated: false),
+                                      displayTextButton("(", 20.0, activated: false),
                                     ],
                                   ),
                               ),
@@ -162,9 +177,9 @@ class _MyCalculator extends State<MyHomeApp> {
                                   Column(
                                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                     children: <Widget> [
-                                      displayTextButton("cos", 20.0),
-                                      displayTextButton("√", 20.0),
-                                      displayTextButton(")", 20.0),
+                                      displayTextButton("cos", 20.0, activated: false),
+                                      displayTextButton("√", 20.0, activated: false),
+                                      displayTextButton(")", 20.0, activated: false),
                                     ],
                                   ),
                               ),
@@ -173,9 +188,9 @@ class _MyCalculator extends State<MyHomeApp> {
                                   Column(
                                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                     children: <Widget> [
-                                      displayTextButton("tan", 20.0),
-                                      displayTextButton("^", 20.0),
-                                      displayTextButton("!", 20.0),
+                                      displayTextButton("tan", 20.0, activated: false),
+                                      displayTextButton("^", 20.0, activated: false),
+                                      displayTextButton("!", 20.0, activated: false),
                                     ],
                                   ),
                               ),
@@ -196,10 +211,10 @@ class _MyCalculator extends State<MyHomeApp> {
                                 Column(
                                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                   children: <Widget> [
-                                    displayTextButton("7", 25.0, Colors.black),
-                                    displayTextButton("4", 25.0, Colors.black),
-                                    displayTextButton("1", 25.0, Colors.black),
-                                    displayTextButton("0", 25.0, Colors.black),
+                                    displayTextButton("7", 25.0, color: Colors.black),
+                                    displayTextButton("4", 25.0, color: Colors.black),
+                                    displayTextButton("1", 25.0, color: Colors.black),
+                                    displayTextButton("0", 25.0, color: Colors.black),
                                   ],
                                 ),
                               ),
@@ -209,10 +224,10 @@ class _MyCalculator extends State<MyHomeApp> {
                                 Column(
                                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                   children: <Widget> [
-                                    displayTextButton("8", 25.0, Colors.black),
-                                    displayTextButton("5", 25.0, Colors.black),
-                                    displayTextButton("2", 25.0, Colors.black),
-                                    displayTextButton(".", 25.0, Colors.black),
+                                    displayTextButton("8", 25.0,  color: Colors.black),
+                                    displayTextButton("5", 25.0,  color: Colors.black),
+                                    displayTextButton("2", 25.0,  color: Colors.black),
+                                    displayTextButton(".", 25.0,  color: Colors.black),
                                   ],
                                 ),
                               ),
@@ -222,10 +237,10 @@ class _MyCalculator extends State<MyHomeApp> {
                                 Column(
                                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                   children: <Widget> [
-                                    displayTextButton("9", 25.0, Colors.black),
-                                    displayTextButton("6", 25.0, Colors.black),
-                                    displayTextButton("3", 25.0, Colors.black),
-                                    displayTextButton("", 25.0, Colors.black, false),
+                                    displayTextButton("9", 25.0,  color: Colors.black),
+                                    displayTextButton("6", 25.0,  color: Colors.black),
+                                    displayTextButton("3", 25.0,  color: Colors.black),
+                                    displayTextButton("", 25.0,  color: Colors.black, activated: false),
                                   ],
                                 ),
                               ),
@@ -242,10 +257,10 @@ class _MyCalculator extends State<MyHomeApp> {
                                 Column(
                                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                   children: <Widget> [
-                                    displayTextButton("/", 25.0, const Color.fromRGBO(26,115,232,1.0)),
-                                    displayTextButton("*", 25.0, const Color.fromRGBO(26,115,232,1.0)),
-                                    displayTextButton("-", 25.0, const Color.fromRGBO(26,115,232,1.0)),
-                                    displayTextButton("+", 25.0, const Color.fromRGBO(26,115,232,1.0)),
+                                    displayTextButton("/", 25.0,  color: const Color.fromRGBO(26,115,232,1.0)),
+                                    displayTextButton("*", 25.0,  color: const Color.fromRGBO(26,115,232,1.0)),
+                                    displayTextButton("-", 25.0,  color: const Color.fromRGBO(26,115,232,1.0)),
+                                    displayTextButton("+", 25.0,  color: const Color.fromRGBO(26,115,232,1.0)),
                                   ],
                                 ),
                               ),
@@ -256,10 +271,10 @@ class _MyCalculator extends State<MyHomeApp> {
                                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                   children: <Widget> [
                                     // displayTextButton("C", 25.0, const Color.fromRGBO(26,115,232,1.0)),
-                                    displayTextButton("⌫", 25.0, const Color.fromRGBO(26,115,232,1.0)),
-                                    displayTextButton("", 25.0, const Color.fromRGBO(26,115,232,1.0), false),
-                                    displayTextButton("", 25.0, const Color.fromRGBO(26,115,232,1.0), false),
-                                    displayTextButton("=", 25.0, const Color.fromRGBO(26,115,232,1.0)),
+                                    displayTextButton("⌫", 25.0,  color: const Color.fromRGBO(26,115,232,1.0)),
+                                    displayTextButton("", 25.0,  color: const Color.fromRGBO(26,115,232,1.0), activated: false),
+                                    displayTextButton("", 25.0,  color: const Color.fromRGBO(26,115,232,1.0), activated: false),
+                                    displayTextButton("=", 25.0,  color: const Color.fromRGBO(26,115,232,1.0)),
                                   ],
                                 ),
                               ),
