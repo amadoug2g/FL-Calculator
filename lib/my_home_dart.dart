@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:math_expressions/math_expressions.dart';
+import 'dart:math' as math;
 
 class MyHomeApp extends StatefulWidget {
   const MyHomeApp({Key? key}) : super(key: key);
@@ -68,12 +69,15 @@ class _MyCalculator extends State<MyHomeApp> {
         expression = input;
         expression = input.replaceAll("×", "*");
         expression = input.replaceAll("÷", "/");
+        expression = input.replaceAll(math.pi.toString(), "π");
+        // expression = input.replaceAll(e.toString(), "e");
 
         try {
           Parser p = Parser();
           Expression exp = p.parse(expression);
 
           ContextModel cm = ContextModel();
+
           result = '${exp.evaluate(EvaluationType.REAL, cm)}';
         } catch (e) {
           result = "Error";
@@ -155,9 +159,9 @@ class _MyCalculator extends State<MyHomeApp> {
                                   Column(
                                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                     children: <Widget> [
-                                      displayTextButton("RAD", 20.0, activated: false),
-                                      displayTextButton("ln", 20.0, activated: false),
-                                      displayTextButton("e", 20.0, activated: false),
+                                      displayTextButton("RAD", 20.0, ),
+                                      displayTextButton("ln", 20.0, ),
+                                      displayTextButton("e", 20.0, ),
                                     ],
                                   ),
                               ),
@@ -166,9 +170,9 @@ class _MyCalculator extends State<MyHomeApp> {
                                   Column(
                                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                     children: <Widget> [
-                                      displayTextButton("sin", 20.0, activated: false),
-                                      displayTextButton("log", 20.0, activated: false),
-                                      displayTextButton("(", 20.0, activated: false),
+                                      displayTextButton("sin", 20.0,),
+                                      displayTextButton("log", 20.0,),
+                                      displayTextButton("(", 20.0, ),
                                     ],
                                   ),
                               ),
@@ -177,9 +181,9 @@ class _MyCalculator extends State<MyHomeApp> {
                                   Column(
                                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                     children: <Widget> [
-                                      displayTextButton("cos", 20.0, activated: false),
-                                      displayTextButton("√", 20.0, activated: false),
-                                      displayTextButton(")", 20.0, activated: false),
+                                      displayTextButton("cos", 20.0, ),
+                                      displayTextButton("√", 20.0, ),
+                                      displayTextButton(")", 20.0, ),
                                     ],
                                   ),
                               ),
@@ -188,9 +192,9 @@ class _MyCalculator extends State<MyHomeApp> {
                                   Column(
                                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                     children: <Widget> [
-                                      displayTextButton("tan", 20.0, activated: false),
-                                      displayTextButton("^", 20.0, activated: false),
-                                      displayTextButton("!", 20.0, activated: false),
+                                      displayTextButton("tan", 20.0, ),
+                                      displayTextButton("^", 20.0, ),
+                                      displayTextButton("!", 20.0, ),
                                     ],
                                   ),
                               ),
